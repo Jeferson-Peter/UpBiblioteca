@@ -17,7 +17,7 @@ def cadastrar_book(request):
     return render(request, 'form_book.html', {'form_book': form_book})
 
 def listar_books(request):
-    books = Book.objects.all()
+    books = Book.objects.all().order_by('-data')
     return render(request, 'lista_books.html', {'books': books})
 
 def editar_book(request, book_id):
