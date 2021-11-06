@@ -1,0 +1,54 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block conteudo %}
+<div align="center">
+<div class="card text-white mb-3" style="max-width: 18rem; background-color: #c0c0c0; text-align: justify; align-content: center">
+    <div class="card-body">
+            <div class="card-header" align="center"><b>{{ bookLoan.book_id}}</b></div>
+        <h5 class="card-title" >Author: {{author}}</h5>
+        {% if bookLoan.user == "" or bookLoan.user == None%}
+        <p class="card-text">O livro não foi emprestado a nehum usuário</p>
+        <p class="card-text">Borrowed date: {{ bookLoan.borrowed}}</p>
+        {% if bookLoan.returned == "" or bookLoan.returned == None %}
+            <p class="card-text">Returned date: </p>
+        {% elif bookLoan.returned != None %}
+            <p class="card-text">Returned date:{{ bookLoan.returned }} </p>
+
+        {% endif %}
+            Do you want to borrow this book?
+          <form method="POST" action="{% url 'cadastrar_loan' book_id %}">{% csrf_token %}
+              <label>Type de username:</label>
+              <input class="form-control" type="text" placeholder="Username" name = "user">
+              <br>
+              <label>Choose de Borrow Date:</label>
+              <input class="form-control" type="date" placeholder="Borrow date" name = "borrowed">
+              <br>
+              <label>Choose de Return Date:</label>
+              <input class="form-control" type="date" placeholder="Borrow date" name = "returned">
+              <br>
+              <button class="btn btn-info btn-lg" type="submit">Borrow Now</button>
+          </form>
+        {% endif %}
+        {% if book.user != "" and book.user != None  %}
+            <p class="card-text">O livro foi emprestado ao usuário: {{ book.user }}</p>
+            <p class="card-text">Borrowed date: {{ book.borrowed}}</p>
+            {% if book.returned == "" or book.return == None %}
+                <p class="card-text">Returned date: </p>
+            {% elif book.returned != None %}
+                <p class="card-text">Returned date:{{ book.returned }} </p>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+</div>
+</div>
+        {% endblock conteudo %}
+</body>
+</html>
